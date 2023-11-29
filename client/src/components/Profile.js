@@ -10,9 +10,7 @@ const Profile = ({ userId, onClose }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/api/user/${userId}`
-        );
+        const response = await axios.get(`/api/user/${userId}`);
         setUserData(response.data.user);
       } catch (err) {
         toast.error("Unable to fetch user detail");
@@ -36,7 +34,7 @@ const Profile = ({ userId, onClose }) => {
                 alt="Profile"
                 className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 xl:h-32 xl:w-32 rounded-full mb-2"
               />
-              <div className="text-3xl font-medium mb-1">Naimish Verma</div>
+              <div className="text-3xl font-medium mb-1">{userData.name}</div>
               <div className="text-sm text-gray-700 font-medium mb-2 flex items-center gap-2">
                 <span>
                   <FaBriefcase />
@@ -44,7 +42,7 @@ const Profile = ({ userId, onClose }) => {
                 Frontend Developer
               </div>
 
-              <div className="text-xl font-medium mb-1">naimish@gmail.com</div>
+              <div className="text-xl font-medium mb-1">{userData.email}</div>
             </div>
           ) : (
             <div className="text-center font-medium text-2xl"> Loading...</div>
