@@ -35,6 +35,8 @@ This project is a prompt sharing website built using the MERN (MongoDB, Express.
     ```bash
     MONGO_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret_key
+    EMAIL_USER=your_gmail_id
+    EMAIL_PASSWORD=your_gmail_app_password
     ```
 4. Run the application:
    ```bash
