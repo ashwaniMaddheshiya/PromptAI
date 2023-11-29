@@ -11,7 +11,13 @@ const app = express();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
+
 app.use("/api/user", userRoutes);
 app.use("/api/prompt", promptRoutes);
 app.use("/api/category", categoryRoutes);

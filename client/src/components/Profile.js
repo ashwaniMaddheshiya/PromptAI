@@ -11,7 +11,7 @@ const Profile = ({ userId, onClose }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/user/${userId}`
+          `/api/user/${userId}`
         );
         setUserData(response.data.user);
       } catch (err) {

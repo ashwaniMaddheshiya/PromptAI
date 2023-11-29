@@ -20,18 +20,20 @@ const Home = () => {
           more, all at no cost to you.
         </p>
         <div className="mt-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
-            {token ? (
-              <Link to="/prompt">
+          {token ? (
+            <Link to="/prompt">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
                 Explore Prompts{" "}
                 <FaArrowCircleRight className="inline ml-2 mb-1" />
-              </Link>
-            ) : (
-              <Link to="/login">
+              </button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">
                 Get Started <FaArrowCircleRight className="inline ml-2 mb-1" />
-              </Link>
-            )}
-          </button>
+              </button>
+            </Link>
+          )}
         </div>
       </div>
       <hr className="max-w-6xl mx-auto my-8" />

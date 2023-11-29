@@ -28,7 +28,7 @@ const Login = () => {
   const onFormSubmit = async (data) => {
     let response;
     try {
-      response = await axios.post("http://localhost:5000/api/user/login", data);
+      response = await axios.post("/api/user/login", data);
     } catch (err) {
       toast.error(err.response.data.error);
     }

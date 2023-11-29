@@ -15,7 +15,7 @@ const Prompts = () => {
       let response;
       try {
         response = await axios.get(
-          `http://localhost:5000/api/prompt/all/${categoryId}`
+          `/api/prompt/all/${categoryId}`
         );
         setPrompts(response.data.completePrompts);
       } catch (err) {
@@ -27,7 +27,7 @@ const Prompts = () => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/category/${categoryId}`
+          `/api/category/${categoryId}`
         );
         setCategory(response.data.response.category);
       } catch (error) {

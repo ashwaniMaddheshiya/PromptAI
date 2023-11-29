@@ -2,6 +2,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -16,6 +17,9 @@ import PageNotFound from "./pages/PageNotFound";
 import Prompts from "./pages/Prompts";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import Chat from "./pages/Chat";
+
+axios.defaults.baseURL = process.env.REACT_APP_BASEURL;
+axios.defaults.withCredentials = true;
 
 const App = () => {
   const token = useSelector(selectToken);

@@ -14,7 +14,7 @@ const PromptForm = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       const response = await axios.get(
-        "http://localhost:5000/api/category/all"
+        "/api/category/all"
       );
       setCategory(response.data.category);
     };

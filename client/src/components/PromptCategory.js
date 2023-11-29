@@ -11,10 +11,11 @@ const PromptCategory = () => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/category/all"
+          "/api/category/all"
         );
         setCategory(response.data.category);
       } catch (err) {
+        console.log(err)
         toast.error("Something went wrong, Please try again");
       }
     };

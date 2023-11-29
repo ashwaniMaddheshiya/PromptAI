@@ -22,7 +22,7 @@ const PromptDetailCard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/prompt/${promptId}`
+          `/api/prompt/${promptId}`
         );
         setPromptDetail(response.data.promptData);
       } catch (error) {
