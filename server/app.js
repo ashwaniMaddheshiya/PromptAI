@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://promptai-client.onrender.com/prompt",
+    origin: "https://promptai-client.onrender.com",
   })
 );
 
