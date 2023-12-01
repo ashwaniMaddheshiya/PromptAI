@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { FaUser } from "react-icons/fa";
 import { SiOpenai } from "react-icons/si";
@@ -7,6 +7,7 @@ import { LuSend } from "react-icons/lu";
 const ChatGPTBox = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() === "") return;
@@ -18,6 +19,8 @@ const ChatGPTBox = () => {
     setInputMessage("");
 
     try {
+      setLoading(true);
+
       const response = await axios.post("/api/chat/chatgpt", {
         prompt: inputMessage,
       });
@@ -30,13 +33,10 @@ const ChatGPTBox = () => {
       ]);
     } catch (error) {
       console.error("Error fetching response:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    // Simulate initial greeting from ChatGPT
-    handleSendMessage("Hello!");
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="max-w-[95%] mx-auto bg-[#343541] rounded-md overflow-hidden shadow-lg mt-4">
@@ -69,6 +69,11 @@ const ChatGPTBox = () => {
             )}
           </div>
         ))}
+        {loading && (
+          <div className="flex justify-center mt-2">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500 border-r-2 border-b-2 border-gray-200"></div>
+          </div>
+        )}
       </div>
       <div className="p-4 flex items-center">
         <input
