@@ -68,7 +68,7 @@ const ChatDalleBox = () => {
                     : "bg-[#159977] text-white"
                 }`}
               >
-                "This bot do not support text-based output"
+                {message.text}
               </span>
             )}
             {message.type === "user" && (
