@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
-import { MdContentCopy } from "react-icons/md";
+import { MdContentCopy, MdVerified } from "react-icons/md";
 import { IoShareOutline } from "react-icons/io5";
 import { useParams, Link } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -21,9 +21,7 @@ const PromptDetailCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/api/prompt/${promptId}`
-        );
+        const response = await axios.get(`/api/prompt/${promptId}`);
         setPromptDetail(response.data.promptData);
       } catch (error) {
         toast.error("Something went wrong, Please try again");
@@ -68,7 +66,12 @@ const PromptDetailCard = () => {
                   <span>
                     <FaUserCircle size={20} />
                   </span>
-                  <span>{promptDetail.userId.name}</span>
+                  <span className="flex items-center gap-2">
+                    <span>{promptDetail.userId.name}</span>
+                    <span>
+                      {promptDetail.userId.isVerified && <MdVerified />}
+                    </span>
+                  </span>
                 </div>
               </Link>
               <hr />

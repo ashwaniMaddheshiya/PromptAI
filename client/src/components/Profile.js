@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBriefcase } from "react-icons/fa";
+import { MdVerified } from "react-icons/md";
 import user from "../user.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -34,7 +35,12 @@ const Profile = ({ userId, onClose }) => {
                 alt="Profile"
                 className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 xl:h-32 xl:w-32 rounded-full mb-2"
               />
-              <div className="text-3xl font-medium mb-1">{userData.name}</div>
+              <div className=" mb-1 flex items-center gap-2">
+                <span className="text-3xl font-medium">{userData.name}</span>
+                <span className="text-xl">
+                  {userData.isVerified && <MdVerified />}
+                </span>
+              </div>
               <div className="text-sm text-gray-700 font-medium mb-2 flex items-center gap-2">
                 <span>
                   <FaBriefcase />

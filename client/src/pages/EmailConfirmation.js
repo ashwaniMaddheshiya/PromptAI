@@ -1,55 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 const EmailConfirmation = () => {
-  const { token } = useParams();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [verified, setVerified] = useState(false);
+  const [error, setError] = useState(false);
+  const [confirming, setConfirming] = useState(true);
+
+
+  const location = useLocation();
+  const token = location.pathname.replace('/verifyemail/', '');
+
+  const verifyUserEmail = async () => {
+    try {
+      await axios.post("/api/user/verify/email", { token });
+      setVerified(true);
+      setConfirming(false);
+    } catch (err) {
+      setError(true);
+      setConfirming(false);
+    }
+  };
 
   useEffect(() => {
-    const confirmEmail = async () => {
-      try {
-        const response = await axios.get(
-          `/api/user/confirm/${token}`
-        );
-        const { success, redirectUrl } = response.data;
-
-        if (success) {
-          toast.success("Email Confirmed");
-          setIsLoading(false);
-          if (redirectUrl) {
-            navigate(redirectUrl);
-          }
-        } else {
-          toast.error("Error Confirming email, Please try again");
-          setIsLoading(false);
-        }
-      } catch (err) {
-        toast.error("Something went wrong, Please try again");
-        setIsLoading(false);
-      }
-    };
-
-    confirmEmail();
-  }, [token, navigate]);
+    if (token.length > 0) {
+      verifyUserEmail();
+    }
+  }, [token]);
 
   return (
-    <>
-      {isLoading && (
-        <div className="w-1/2 border shadow-md bg-white h-32 flex justify-center items-center rounded-md mx-auto my-8">
-          <p className="text-3xl font-medium">Confirming Email...Please Wait</p>
-        </div>
-      )}
-      {!isLoading && (
-        <div className="w-1/2 border shadow-md bg-white h-32 flex justify-center items-center rounded-md mx-auto my-8">
-          <p className="text-3xl font-medium">
-            Email Confirmed. Redirecting...
-          </p>
-        </div>
-      )}
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <div className="w-[50%] h-32 rounded-md overflow-hidden shadow-lg bg-white flex justify-center items-center">
+        {confirming && (
+          <div>
+            <h2 className="text-2xl font-medium">Confirming Email...</h2>
+          </div>
+        )}
+        {verified && (
+          <div className="text-center">
+            <h2 className="text-2xl font-medium mb-4">Email Confirmed</h2>
+            <Link to="/login">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Login
+              </button>
+            </Link>
+          </div>
+        )}
+        {error && (
+          <div>
+            <h2 className="text-2xl font-medium">Token Expired!</h2>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

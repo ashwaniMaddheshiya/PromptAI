@@ -7,12 +7,15 @@ const getAllPromptsByCategory = async (req, res, next) => {
   let prompts;
   try {
     prompts = await Prompts.find({ categoryId })
-      .populate("userId", "_id name")
+      .populate("userId", "_id name isVerified")
       .populate("categoryId", "category");
+      console.log(prompts)
   } catch (err) {
     console.log(err);
     return res.status(400).json("Unable to fetch the prompts");
   }
+
+  
 
   const completePrompts = prompts.map((data) => {
     return {
@@ -20,8 +23,9 @@ const getAllPromptsByCategory = async (req, res, next) => {
       title: data.title,
       prompt: data.prompt,
       tags: data.tags,
-      name: data.userId.name,
       user: data.userId._id,
+      name: data.userId.name,
+      isVerified: data.userId.isVerified,
       category: data.categoryId.category,
     };
   });
@@ -33,7 +37,7 @@ const getAllPromptsByCategory = async (req, res, next) => {
 const addPrompts = async (req, res, next) => {
   const { title, prompt, tags, userId, category } = req.body;
   const tagsArray = Array.isArray(tags) ? tags : [tags];
-  // console.log(req.body);
+  console.log(req.body);
 
   let newPrompt;
   try {
@@ -60,7 +64,7 @@ const getPromptDetail = async (req, res, next) => {
   try {
     promptData = await Prompts.findById({ _id: promptId }).populate(
       "userId",
-      "_id name"
+      "_id name isVerified"
     );
   } catch (err) {
     return res

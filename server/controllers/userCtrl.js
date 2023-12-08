@@ -2,32 +2,7 @@ const bcryptjs = require("bcryptjs");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-
-const sendConfirmationEmail = async (userEmail, userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "5m",
-  });
-
-  const confirmationLink = `http://localhost:3000/confirm/${token}`;
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: userEmail,
-    subject: "Confirm Your Email",
-    text: `Click on the following link to confirm your email: ${confirmationLink}`,
-  };
-
-  await transporter.sendMail(mailOptions);
-  return token;
-};
+const { sendEmail } = require("../utils/mailer");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -72,6 +47,7 @@ const login = async (req, res, next) => {
     user: {
       userId: existingUser._id,
       name: existingUser.name,
+      isVerified: existingUser.isVerified,
     },
   });
 };
@@ -103,16 +79,18 @@ const register = async (req, res, next) => {
     return res.status(500).json({ error: "Unable to create user" });
   }
 
-  let data;
   try {
-    data = await sendConfirmationEmail(newUser.email, newUser._id);
+    const mailResponse = await sendEmail({
+      email,
+      emailType: "VERIFY",
+      userId: newUser._id,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Error sending confirmation email" });
   }
 
   return res.status(200).json({
-    token: data,
     user: {
       userId: newUser._id,
       name: newUser.name,

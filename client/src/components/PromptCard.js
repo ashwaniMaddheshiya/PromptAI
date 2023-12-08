@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Profile from "./Profile";
 
@@ -22,7 +23,10 @@ const PromptCard = (props) => {
             <span>
               <FaUserCircle size={20} />
             </span>
-            <span className="text-sm md:text-base">{props.name}</span>
+            <span className="text-sm md:text-base flex items-center gap-2">
+              <span>{props.name}</span>
+              <span>{props.isVerified &&  <MdVerified />}</span>
+               </span>
           </div>
         </Link>
         <hr className="border-gray-400" />

@@ -59,6 +59,7 @@ const Prompts = () => {
               title={prompt.title}
               tags={prompt.tags}
               user={prompt.user}
+              isVerified={prompt.isVerified}
               promptId={prompt.promptId}
               categoryId={categoryId}
             />

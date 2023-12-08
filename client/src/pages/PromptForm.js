@@ -33,7 +33,7 @@ const PromptForm = () => {
     let response;
 
     try {
-      response = await axios.post("http://localhost:5000/api/prompt/new", {
+      response = await axios.post("/api/prompt/new", {
         ...data,
         ...user,
       });

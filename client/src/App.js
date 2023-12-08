@@ -31,7 +31,7 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Register />} />
-        <Route exact path="/confirm/:token" element={<EmailConfirmation />} />
+        <Route exact path="/verifyemail/:token/*" element={<EmailConfirmation />} />
         <Route exact path="/prompt" element={<PromptCategories />} />
         <Route exact path="/prompt/:categoryId" element={<Prompts />} />
         <Route
