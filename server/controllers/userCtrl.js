@@ -98,6 +98,38 @@ const register = async (req, res, next) => {
   });
 };
 
+const checkEmail = async (req, res) => {
+  const { email } = req.body;
+
+  let user;
+  try {
+    user = await User.findOne({ email });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(400)
+      .json({ error: "Unable to fetch user, Please try again!" });
+  }
+
+  if (!user) {
+    return res.status(400).json({ error: "No user found with this email!" });
+  }
+
+  try {
+    await sendEmail({
+      email: user.email,
+      emailType: "RESET",
+      userId: user._id,
+    });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ error: "Something went wrong, Please try again" });
+  }
+
+  return res.status(200).json({ success: true });
+};
+
 const profile = async (req, res) => {
   const token = req.headers.authorization;
 
@@ -148,4 +180,11 @@ const confirmation = async (req, res) => {
   }
 };
 
-module.exports = { login, register, profile, confirmation, getUserDetail };
+module.exports = {
+  login,
+  register,
+  checkEmail,
+  profile,
+  confirmation,
+  getUserDetail,
+};

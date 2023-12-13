@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcryptjs = require("bcryptjs");
 
 const verifyEmail = async (req, res) => {
   try {
@@ -27,4 +28,35 @@ const verifyEmail = async (req, res) => {
   }
 };
 
-module.exports = { verifyEmail };
+const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    const user = await User.findOne({
+      forgotPasswordToken: token,
+      forgotPasswordTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(500).json({ error: "Invalid Token!" });
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 12);
+    user.password = hashedPassword;
+    user.forgotPasswordToken = undefined;
+    user.forgotPasswordTokenExpiry = undefined;
+
+    await user.save();
+
+    return res.status(200).json({
+      message: "Password updated successfully!",
+      success: true,
+    });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ error: "Something went wrong, Please try again later!" });
+  }
+};
+
+module.exports = { verifyEmail, resetPassword };

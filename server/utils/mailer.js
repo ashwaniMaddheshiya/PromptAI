@@ -4,7 +4,7 @@ const bcryptjs = require("bcryptjs");
 
 const sendEmail = async ({ email, emailType, userId }) => {
   try {
-    const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+    const hashedToken = await bcryptjs.hash(userId.toString(), 12);
 
     if (emailType === "VERIFY") {
       await User.findByIdAndUpdate(userId, {
@@ -20,8 +20,8 @@ const sendEmail = async ({ email, emailType, userId }) => {
 
     var transport = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port:465,
-      secure:true,
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
@@ -33,14 +33,16 @@ const sendEmail = async ({ email, emailType, userId }) => {
       to: email,
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
-      html: `<p>Click <a href="${
-        process.env.BASE_URL
-      }/verifyemail/${hashedToken}">here</a> to ${
+      html: `<p>Click <a href="${process.env.BASE_URL}/${
+        emailType === "VERIFY" ? "verifyemail" : "resetpassword"
+      }/${hashedToken}">here</a> to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
       }
             or copy and paste the link below in your browser. <br> ${
               process.env.BASE_URL
-            }/verifyemail/${hashedToken}
+            }/${
+        emailType === "VERIFY" ? "verifyemail" : "resetpassword"
+      }/${hashedToken}
             </p>`,
     };
 

@@ -17,23 +17,25 @@ const PromptCard = (props) => {
 
   return (
     <>
-      <div className="max-w-xs rounded my-4 overflow-hidden shadow-md bg-gradient-to-b from-blue-100 via-blue-300 to-blue-500">
+      <div
+        className="max-w-xs rounded my-4 overflow-hidden shadow-md bg-[#8a928b]"
+      >
         <Link to="#" onClick={openProfile}>
           <div className="flex items-center p-3 gap-2">
             <span>
               <FaUserCircle size={20} />
             </span>
             <span className="text-sm md:text-base flex items-center gap-2">
-              <span>{props.name}</span>
-              <span>{props.isVerified &&  <MdVerified />}</span>
-               </span>
+              <span className="font-medium">{props.name}</span>
+              <span>{props.isVerified && <MdVerified />}</span>
+            </span>
           </div>
         </Link>
         <hr className="border-gray-400" />
 
         <Link to={`/prompt/${props.categoryId}/${props.promptId}`}>
           <div className="px-6 py-4 min-h-[13rem]  flex justify-center items-center">
-            <p className="font-medium text-gray-700 text-xl md:text-2xl">
+            <p className="font-medium  text-xl md:text-2xl">
               {props.title.length > 60
                 ? `${props.title.substring(0, 60)}...`
                 : props.title}
@@ -46,7 +48,7 @@ const PromptCard = (props) => {
           {props.tags.map((tag, index) => (
             <span
               key={index}
-              className="inline bg-gray-200 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700 mr-2 mb-2"
+              className="inline bg-gray-700 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-white mr-2 mb-2"
             >
               {tag}
             </span>

@@ -17,6 +17,8 @@ import PageNotFound from "./pages/PageNotFound";
 import Prompts from "./pages/Prompts";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import Chat from "./pages/Chat";
+import PasswordReset from "./pages/PasswordReset";
+import UpdatePassword from "./pages/UpdatePassword";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL;
 axios.defaults.withCredentials = true;
@@ -32,6 +34,8 @@ const App = () => {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Register />} />
         <Route exact path="/verifyemail/:token/*" element={<EmailConfirmation />} />
+        <Route exact path="/reset" element={<PasswordReset />} />
+        <Route exact path="/resetpassword/:token/*" element={<UpdatePassword />} />
         <Route exact path="/prompt" element={<PromptCategories />} />
         <Route exact path="/prompt/:categoryId" element={<Prompts />} />
         <Route

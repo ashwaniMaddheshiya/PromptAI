@@ -9,7 +9,6 @@ const getAllPromptsByCategory = async (req, res, next) => {
     prompts = await Prompts.find({ categoryId })
       .populate("userId", "_id name isVerified")
       .populate("categoryId", "category");
-      console.log(prompts)
   } catch (err) {
     console.log(err);
     return res.status(400).json("Unable to fetch the prompts");
@@ -37,7 +36,6 @@ const getAllPromptsByCategory = async (req, res, next) => {
 const addPrompts = async (req, res, next) => {
   const { title, prompt, tags, userId, category } = req.body;
   const tagsArray = Array.isArray(tags) ? tags : [tags];
-  console.log(req.body);
 
   let newPrompt;
   try {

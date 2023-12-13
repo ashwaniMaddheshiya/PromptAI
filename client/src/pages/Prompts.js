@@ -10,6 +10,7 @@ const Prompts = () => {
   const [category, setCategory] = useState();
   const { categoryId } = useParams();
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {

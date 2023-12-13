@@ -128,7 +128,7 @@ const Login = () => {
             </button>
             <Link
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              to="#"
+              to="/reset"
             >
               Forgot Password?
             </Link>
