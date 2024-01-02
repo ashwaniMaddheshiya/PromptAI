@@ -9,10 +9,11 @@ This project is a prompt sharing website built using the MERN (MongoDB, Express.
  - Authentication: Secure user authentication using JWT for prompt creation and management.
  - Responsive Design: Tailwind CSS and React Icons are used for styling, ensuring a responsive and visually appealing user interface.
  - Multiple AI-Chatbot: Use different AI chatbot at one place like ChatGPT, DALL-E, NotionAI etc.
+ - Email verification is added to verify the users.
 
 ### Technologies Used
  - Frontend: React.js, Tailwind CSS, React Icons
- - Backend: Node.js, Express.js
+ - Backend: Node.js, Express.js, Nodemailer
  - Database: MongoDB
  - Authentication: JWT (JSON Web Tokens)
 
@@ -38,6 +39,8 @@ This project is a prompt sharing website built using the MERN (MongoDB, Express.
     JWT_SECRET=your_jwt_secret_key
     EMAIL_USER=your_gmail_id
     EMAIL_PASSWORD=your_gmail_app_password
+    OPENAI_API_KEY=your_openAPI_key
+    BASE_URL=your_frontend_url
     ```
 4. Run the application:
    ```bash
