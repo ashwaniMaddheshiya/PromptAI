@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../reducers/authReducer";
 
 const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const token = useSelector(selectToken);
 
@@ -26,14 +27,14 @@ const Register = () => {
 
   const onFormSubmit = async (data) => {
     let response;
+    setIsLoading(true)
     try {
-      response = await axios.post(
-        "/api/user/register",
-        data
-      );
+      response = await axios.post("/api/user/register", data);
     } catch (err) {
       toast.error(err.response.data.error);
     }
+
+    setIsLoading(false)
 
     if (response) {
       toast.success("Confirmation link sent to your mail");
@@ -161,8 +162,9 @@ const Register = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded-lg focus:outline-none focus:shadow-outline"
               type="button"
               onClick={handleSubmit(onFormSubmit)}
+              disabled={isLoading}
             >
-              Sign Up
+              {isLoading ? "Signing Up..." : "Sign Up"}
             </button>
           </div>
         </form>

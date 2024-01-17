@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { setToken, setUserInfo, selectToken } from "../reducers/authReducer";
 
 
 const Login = () => {
+  const[isLoading,setIsLoading] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
@@ -27,11 +28,14 @@ const Login = () => {
 
   const onFormSubmit = async (data) => {
     let response;
+    setIsLoading(true)
     try {
       response = await axios.post("/api/user/login", data);
     } catch (err) {
       toast.error(err.response.data.error);
     }
+
+    setIsLoading(false)
 
     if (response) {
       dispatch(setUserInfo(response.data.user));
@@ -123,8 +127,9 @@ const Login = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded-lg focus:outline-none focus:shadow-outline"
               type="button"
               onClick={handleSubmit(onFormSubmit)}
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
             <Link
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
